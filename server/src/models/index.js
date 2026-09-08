@@ -1,0 +1,15 @@
+export { default as User } from './User.js';
+export { default as Challenge } from './Challenge.js';
+export { default as ChallengeEvidence } from './ChallengeEvidence.js';
+export { default as ChallengeCluster } from './ChallengeCluster.js';
+export { default as University } from './University.js';
+export { default as Faculty } from './Faculty.js';
+export { default as Student } from './Student.js';
+export { default as IndustryPartner } from './IndustryPartner.js';
+export { default as Project } from './Project.js';
+export { default as Milestone } from './Milestone.js';
+export { default as Proposal } from './Proposal.js';
+export { default as CollaborationRequest } from './CollaborationRequest.js';
+export { default as Notification } from './Notification.js';
+export { default as ImpactMetric } from './ImpactMetric.js';
+export { default as AuditLog } from './AuditLog.js';
