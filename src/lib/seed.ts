@@ -356,11 +356,12 @@ export const CLUSTER_REPORTS: Challenge[] = Array.from({ length: 22 }, (_, i) =>
   mk({
     id: `ch-c${i + 1}`,
     code: `JH-CH-C${String(i + 1).padStart(2, "0")}`,
-    title: ["Yellow water from handpump", "Children falling sick after drinking well water", "Metallic taste in tap water", "Handpump water unfit for drinking"][i % 4],
+    title: ["Yellow water from handpump", "Children falling sick after drinking well water", "Metallic taste in tap water", "Handpump water unfit for drinking"][i % 4]!,
     description: `Report from ${villages[i % villages.length]} village about discoloured drinking water.`,
     category: "Water Management",
     subcategory: "Drinking Water Quality",
-    location: { district: "Gumla", block: "Raidih", village: villages[i % villages.length], lat: 22.98 + (i % 5) * 0.008 - 0.016, lng: 84.36 + (i % 4) * 0.01 - 0.015 },
+    location: { district: "Gumla", block: "Raidih", village: villages[i % villages.length]!, lat: 22.98 + (i % 5) * 0.008 - 0.016, lng: 84.36 + (i % 4) * 0.01 - 0.015 },
+
     affectedPopulation: 20 + i * 7,
     status: "MERGED",
     clusterId: "cl-1",
