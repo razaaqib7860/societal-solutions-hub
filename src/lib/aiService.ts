@@ -76,10 +76,11 @@ export function classifyChallenge(title: string, description: string) {
       bestScore = score;
     }
   }
-  const subs = DOMAINS[best].subcategories;
+  const subs = DOMAINS[best]!.subcategories;
   return {
     category: best,
-    subcategory: subs[hash(text) % subs.length],
+    subcategory: subs[hash(text) % subs.length]!,
+
     confidence: bestScore > 0 ? Math.min(0.97, 0.72 + bestScore * 0.06) : 0.61,
   };
 }
@@ -142,12 +143,13 @@ export function matchUniversities(category: string, universities: University[]):
         score += expertiseHits.length * 9;
         reasons.push(`${expertiseHits.join(", ")} expertise`);
       }
-      const research = u.researchAreas.filter((r) => r.toLowerCase().includes(category.split(" ")[0].toLowerCase()));
+      const research = u.researchAreas.filter((r) => r.toLowerCase().includes(category.split(" ")[0]!.toLowerCase()));
       if (research.length) {
         score += 8;
         reasons.push(`Active research: ${research[0]}`);
       }
-      const labs = u.laboratories.filter((l) => skills.some((s) => l.toLowerCase().includes(s.toLowerCase().split(" ")[0])));
+      const labs = u.laboratories.filter((l) => skills.some((s) => l.toLowerCase().includes(s.toLowerCase().split(" ")[0]!)));
+
       if (labs.length) {
         score += 6;
         reasons.push(`Suitable laboratory: ${labs[0]}`);
@@ -167,7 +169,7 @@ export function matchIndustryPartners(category: string, partners: IndustryPartne
   const skills = DOMAINS[category]?.skills ?? [];
   return partners
     .map((p) => {
-      const hits = p.capabilities.filter((c) => skills.some((s) => c.toLowerCase().includes(s.toLowerCase().split(" ")[0])));
+      const hits = p.capabilities.filter((c) => skills.some((s) => c.toLowerCase().includes(s.toLowerCase().split(" ")[0]!)));
       return { partnerId: p.id, score: Math.min(95, 60 + hits.length * 12 + (hash(p.id + category) % 9)) };
     })
     .sort((a, b) => b.score - a.score);
