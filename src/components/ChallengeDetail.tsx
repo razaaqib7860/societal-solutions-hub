@@ -18,8 +18,8 @@ export function ChallengeDetail({
   extra,
 }: {
   challenge: Challenge;
-  actions?: ReactNode;
-  extra?: ReactNode;
+  actions?: ReactNode | undefined;
+  extra?: ReactNode | undefined;
 }) {
   const { getUniversity } = useData();
   const uni = getUniversity(challenge.assignedUniversity);

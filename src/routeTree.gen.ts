@@ -14,6 +14,10 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as ChallengesIndexRouteImport } from './routes/challenges.index'
 import { Route as ChallengesIdRouteImport } from './routes/challenges.$id'
+import { Route as CitizenIndexRouteImport } from './routes/citizen.index'
+import { Route as CitizenNearbyRouteImport } from './routes/citizen.nearby'
+import { Route as CitizenChallengesIndexRouteImport } from './routes/citizen.challenges.index'
+import { Route as CitizenChallengesIdRouteImport } from './routes/citizen.challenges.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,20 +44,48 @@ const ChallengesIdRoute = ChallengesIdRouteImport.update({
   path: '/challenges/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CitizenIndexRoute = CitizenIndexRouteImport.update({
+  id: '/citizen/',
+  path: '/citizen/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CitizenNearbyRoute = CitizenNearbyRouteImport.update({
+  id: '/citizen/nearby',
+  path: '/citizen/nearby',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CitizenChallengesIndexRoute = CitizenChallengesIndexRouteImport.update({
+  id: '/citizen/challenges/',
+  path: '/citizen/challenges/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CitizenChallengesIdRoute = CitizenChallengesIdRouteImport.update({
+  id: '/citizen/challenges/$id',
+  path: '/citizen/challenges/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/challenges/$id': typeof ChallengesIdRoute
+  '/citizen/nearby': typeof CitizenNearbyRoute
   '/challenges/': typeof ChallengesIndexRoute
+  '/citizen/': typeof CitizenIndexRoute
+  '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
+  '/citizen/challenges/': typeof CitizenChallengesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/challenges/$id': typeof ChallengesIdRoute
+  '/citizen/nearby': typeof CitizenNearbyRoute
   '/challenges': typeof ChallengesIndexRoute
+  '/citizen': typeof CitizenIndexRoute
+  '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
+  '/citizen/challenges': typeof CitizenChallengesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,21 +93,46 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/unauthorized': typeof UnauthorizedRoute
   '/challenges/$id': typeof ChallengesIdRoute
+  '/citizen/nearby': typeof CitizenNearbyRoute
   '/challenges/': typeof ChallengesIndexRoute
+  '/citizen/': typeof CitizenIndexRoute
+  '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
+  '/citizen/challenges/': typeof CitizenChallengesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/login' | '/unauthorized' | '/challenges/$id' | '/challenges/'
+    | '/'
+    | '/login'
+    | '/unauthorized'
+    | '/challenges/$id'
+    | '/citizen/nearby'
+    | '/challenges/'
+    | '/citizen/'
+    | '/citizen/challenges/$id'
+    | '/citizen/challenges/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/unauthorized' | '/challenges/$id' | '/challenges'
+  to:
+    | '/'
+    | '/login'
+    | '/unauthorized'
+    | '/challenges/$id'
+    | '/citizen/nearby'
+    | '/challenges'
+    | '/citizen'
+    | '/citizen/challenges/$id'
+    | '/citizen/challenges'
   id:
     | '__root__'
     | '/'
     | '/login'
     | '/unauthorized'
     | '/challenges/$id'
+    | '/citizen/nearby'
     | '/challenges/'
+    | '/citizen/'
+    | '/citizen/challenges/$id'
+    | '/citizen/challenges/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -83,7 +140,11 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   UnauthorizedRoute: typeof UnauthorizedRoute
   ChallengesIdRoute: typeof ChallengesIdRoute
+  CitizenNearbyRoute: typeof CitizenNearbyRoute
   ChallengesIndexRoute: typeof ChallengesIndexRoute
+  CitizenIndexRoute: typeof CitizenIndexRoute
+  CitizenChallengesIdRoute: typeof CitizenChallengesIdRoute
+  CitizenChallengesIndexRoute: typeof CitizenChallengesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -123,6 +184,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChallengesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/citizen/': {
+      id: '/citizen/'
+      path: '/citizen'
+      fullPath: '/citizen/'
+      preLoaderRoute: typeof CitizenIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/citizen/nearby': {
+      id: '/citizen/nearby'
+      path: '/citizen/nearby'
+      fullPath: '/citizen/nearby'
+      preLoaderRoute: typeof CitizenNearbyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/citizen/challenges/': {
+      id: '/citizen/challenges/'
+      path: '/citizen/challenges'
+      fullPath: '/citizen/challenges/'
+      preLoaderRoute: typeof CitizenChallengesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/citizen/challenges/$id': {
+      id: '/citizen/challenges/$id'
+      path: '/citizen/challenges/$id'
+      fullPath: '/citizen/challenges/$id'
+      preLoaderRoute: typeof CitizenChallengesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -131,7 +220,11 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   UnauthorizedRoute: UnauthorizedRoute,
   ChallengesIdRoute: ChallengesIdRoute,
+  CitizenNearbyRoute: CitizenNearbyRoute,
   ChallengesIndexRoute: ChallengesIndexRoute,
+  CitizenIndexRoute: CitizenIndexRoute,
+  CitizenChallengesIdRoute: CitizenChallengesIdRoute,
+  CitizenChallengesIndexRoute: CitizenChallengesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
