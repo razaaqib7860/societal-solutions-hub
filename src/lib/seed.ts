@@ -403,7 +403,7 @@ export const PROJECTS: Project[] = [
     title: "Solar Microgrid for Kolebira Hamlets",
     challengeId: "ch-1006",
     universityId: "uni-nit",
-    facultyMentorId: undefined,
+    
     studentIds: [],
     requiredSkills: ["Power electronics", "Battery systems"],
     industryPartnerIds: [],
