@@ -16,6 +16,7 @@ import { Route as ChallengesIndexRouteImport } from './routes/challenges.index'
 import { Route as ChallengesIdRouteImport } from './routes/challenges.$id'
 import { Route as CitizenIndexRouteImport } from './routes/citizen.index'
 import { Route as CitizenNearbyRouteImport } from './routes/citizen.nearby'
+import { Route as CitizenReportRouteImport } from './routes/citizen.report'
 import { Route as CitizenChallengesIndexRouteImport } from './routes/citizen.challenges.index'
 import { Route as CitizenChallengesIdRouteImport } from './routes/citizen.challenges.$id'
 
@@ -54,6 +55,11 @@ const CitizenNearbyRoute = CitizenNearbyRouteImport.update({
   path: '/citizen/nearby',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CitizenReportRoute = CitizenReportRouteImport.update({
+  id: '/citizen/report',
+  path: '/citizen/report',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CitizenChallengesIndexRoute = CitizenChallengesIndexRouteImport.update({
   id: '/citizen/challenges/',
   path: '/citizen/challenges/',
@@ -71,6 +77,7 @@ export interface FileRoutesByFullPath {
   '/unauthorized': typeof UnauthorizedRoute
   '/challenges/$id': typeof ChallengesIdRoute
   '/citizen/nearby': typeof CitizenNearbyRoute
+  '/citizen/report': typeof CitizenReportRoute
   '/challenges/': typeof ChallengesIndexRoute
   '/citizen/': typeof CitizenIndexRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/unauthorized': typeof UnauthorizedRoute
   '/challenges/$id': typeof ChallengesIdRoute
   '/citizen/nearby': typeof CitizenNearbyRoute
+  '/citizen/report': typeof CitizenReportRoute
   '/challenges': typeof ChallengesIndexRoute
   '/citizen': typeof CitizenIndexRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/unauthorized': typeof UnauthorizedRoute
   '/challenges/$id': typeof ChallengesIdRoute
   '/citizen/nearby': typeof CitizenNearbyRoute
+  '/citizen/report': typeof CitizenReportRoute
   '/challenges/': typeof ChallengesIndexRoute
   '/citizen/': typeof CitizenIndexRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/unauthorized'
     | '/challenges/$id'
     | '/citizen/nearby'
+    | '/citizen/report'
     | '/challenges/'
     | '/citizen/'
     | '/citizen/challenges/$id'
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/unauthorized'
     | '/challenges/$id'
     | '/citizen/nearby'
+    | '/citizen/report'
     | '/challenges'
     | '/citizen'
     | '/citizen/challenges/$id'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/unauthorized'
     | '/challenges/$id'
     | '/citizen/nearby'
+    | '/citizen/report'
     | '/challenges/'
     | '/citizen/'
     | '/citizen/challenges/$id'
@@ -141,6 +153,7 @@ export interface RootRouteChildren {
   UnauthorizedRoute: typeof UnauthorizedRoute
   ChallengesIdRoute: typeof ChallengesIdRoute
   CitizenNearbyRoute: typeof CitizenNearbyRoute
+  CitizenReportRoute: typeof CitizenReportRoute
   ChallengesIndexRoute: typeof ChallengesIndexRoute
   CitizenIndexRoute: typeof CitizenIndexRoute
   CitizenChallengesIdRoute: typeof CitizenChallengesIdRoute
@@ -198,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CitizenNearbyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/citizen/report': {
+      id: '/citizen/report'
+      path: '/citizen/report'
+      fullPath: '/citizen/report'
+      preLoaderRoute: typeof CitizenReportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/citizen/challenges/': {
       id: '/citizen/challenges/'
       path: '/citizen/challenges'
@@ -221,6 +241,7 @@ const rootRouteChildren: RootRouteChildren = {
   UnauthorizedRoute: UnauthorizedRoute,
   ChallengesIdRoute: ChallengesIdRoute,
   CitizenNearbyRoute: CitizenNearbyRoute,
+  CitizenReportRoute: CitizenReportRoute,
   ChallengesIndexRoute: ChallengesIndexRoute,
   CitizenIndexRoute: CitizenIndexRoute,
   CitizenChallengesIdRoute: CitizenChallengesIdRoute,
