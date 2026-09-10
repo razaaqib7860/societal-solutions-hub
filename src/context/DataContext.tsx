@@ -201,8 +201,12 @@ export function DataProvider({ children }: { children: ReactNode }) {
               timeline: [...c.timeline, { status: c.status, at: now(), by, note: `Merged ${ids.size} similar reports into master challenge` }],
             };
           }
-          return ids.has(c.id) ? { ...c, status: "MERGED" as ChallengeStatus, clusterId: master.clusterId ?? c.clusterId } : c;
+          const merged = ids.has(c.id);
+          if (!merged) return c;
+          const cid = master.clusterId ?? c.clusterId;
+          return { ...c, status: "MERGED" as ChallengeStatus, ...(cid ? { clusterId: cid } : {}) };
         }),
+
       );
     },
     [challenges],
