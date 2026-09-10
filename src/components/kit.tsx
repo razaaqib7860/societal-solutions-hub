@@ -14,9 +14,9 @@ export function PanelHeader({
   eyebrow,
 }: {
   title: string;
-  subtitle?: string;
-  action?: ReactNode;
-  eyebrow?: string;
+  subtitle?: string | undefined;
+  action?: ReactNode | undefined;
+  eyebrow?: string | undefined;
 }) {
   return (
     <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-5 py-4">
@@ -36,10 +36,10 @@ export function SectionHeading({
   description,
   action,
 }: {
-  eyebrow?: string;
+  eyebrow?: string | undefined;
   title: string;
-  description?: string;
-  action?: ReactNode;
+  description?: string | undefined;
+  action?: ReactNode | undefined;
 }) {
   return (
     <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
@@ -61,8 +61,8 @@ export function Metric({
 }: {
   label: string;
   value: string | number;
-  hint?: string;
-  tone?: "default" | "accent" | "primary";
+  hint?: string | undefined;
+  tone?: "default" | "accent" | "primary" | undefined;
 }) {
   return (
     <div className="panel-flat rounded-lg px-4 py-3.5">
@@ -98,8 +98,8 @@ export function Badge({
   className,
 }: {
   children: ReactNode;
-  tone?: keyof typeof badgeTone;
-  className?: string;
+  tone?: keyof typeof badgeTone | undefined;
+  className?: string | undefined;
 }) {
   return (
     <span
@@ -209,10 +209,10 @@ export function Field({
   className,
 }: {
   label: string;
-  hint?: string;
-  required?: boolean;
+  hint?: string | undefined;
+  required?: boolean | undefined;
   children: ReactNode;
-  className?: string;
+  className?: string | undefined;
 }) {
   return (
     <label className={cn("block", className)}>

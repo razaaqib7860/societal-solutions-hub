@@ -24,7 +24,7 @@ export function JharkhandMap({
   onSelect,
 }: {
   challenges: Challenge[];
-  className?: string;
+  className?: string | undefined;
   onSelect?: (c: Challenge) => void;
 }) {
   const [hover, setHover] = useState<Challenge | null>(null);

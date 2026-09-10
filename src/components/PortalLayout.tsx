@@ -26,7 +26,7 @@ interface NavItem {
   to: string;
   label: string;
   icon: typeof LayoutDashboard;
-  exact?: boolean;
+  exact?: boolean | undefined;
 }
 
 const NAV: Record<Role, NavItem[]> = {
@@ -71,7 +71,7 @@ export function PortalLayout({
 }: {
   role: Role;
   title: string;
-  subtitle?: string;
+  subtitle?: string | undefined;
   children: ReactNode;
 }) {
   const { user, ready, logout } = useAuth();
