@@ -29,7 +29,7 @@ export const Route = createFileRoute("/admin/analytics")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: Analytics;
+  component: Analytics,
 });
 
 const GREEN = "var(--color-primary)";
@@ -83,7 +83,11 @@ function Analytics() {
           <Metric label="Challenges on register" value={open.length} />
           <Metric label="Districts reporting" value={byDistrict.length} />
           <Metric label="Active projects" value={projects.length} tone="primary" />
-          <Metric label="Citizens impacted" value={(citizensImpacted || IMPACT_SNAPSHOT.citizensImpacted).toLocaleString("en-IN")} tone="accent" />
+          <Metric
+            label="Citizens impacted"
+            value={(citizensImpacted || IMPACT_SNAPSHOT.find((m) => m.label === "Citizens Impacted")?.value || 0).toLocaleString("en-IN")}
+            tone="accent"
+          />
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
