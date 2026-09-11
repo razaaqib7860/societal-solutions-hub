@@ -29,7 +29,7 @@ export const Route = createFileRoute("/admin/analytics")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  component: Analytics;
+  component: Analytics,
 });
 
 const GREEN = "var(--color-primary)";
