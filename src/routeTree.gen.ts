@@ -13,12 +13,16 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as UnauthorizedRouteImport } from './routes/unauthorized'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as AdminClustersRouteImport } from './routes/admin.clusters'
+import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
 import { Route as ChallengesIndexRouteImport } from './routes/challenges.index'
 import { Route as ChallengesIdRouteImport } from './routes/challenges.$id'
 import { Route as CitizenIndexRouteImport } from './routes/citizen.index'
 import { Route as CitizenNearbyRouteImport } from './routes/citizen.nearby'
 import { Route as CitizenReportRouteImport } from './routes/citizen.report'
 import { Route as AdminChallengesIndexRouteImport } from './routes/admin.challenges.index'
+import { Route as AdminChallengesIdRouteImport } from './routes/admin.challenges.$id'
 import { Route as CitizenChallengesIndexRouteImport } from './routes/citizen.challenges.index'
 import { Route as CitizenChallengesIdRouteImport } from './routes/citizen.challenges.$id'
 
@@ -40,6 +44,21 @@ const UnauthorizedRoute = UnauthorizedRouteImport.update({
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/admin/analytics',
+  path: '/admin/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminClustersRoute = AdminClustersRouteImport.update({
+  id: '/admin/clusters',
+  path: '/admin/clusters',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminProjectsRoute = AdminProjectsRouteImport.update({
+  id: '/admin/projects',
+  path: '/admin/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChallengesIndexRoute = ChallengesIndexRouteImport.update({
@@ -72,6 +91,11 @@ const AdminChallengesIndexRoute = AdminChallengesIndexRouteImport.update({
   path: '/admin/challenges/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminChallengesIdRoute = AdminChallengesIdRouteImport.update({
+  id: '/admin/challenges/$id',
+  path: '/admin/challenges/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CitizenChallengesIndexRoute = CitizenChallengesIndexRouteImport.update({
   id: '/citizen/challenges/',
   path: '/citizen/challenges/',
@@ -87,12 +111,16 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/unauthorized': typeof UnauthorizedRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/clusters': typeof AdminClustersRoute
+  '/admin/projects': typeof AdminProjectsRoute
   '/challenges/$id': typeof ChallengesIdRoute
   '/citizen/nearby': typeof CitizenNearbyRoute
   '/citizen/report': typeof CitizenReportRoute
   '/admin/': typeof AdminIndexRoute
   '/challenges/': typeof ChallengesIndexRoute
   '/citizen/': typeof CitizenIndexRoute
+  '/admin/challenges/$id': typeof AdminChallengesIdRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
   '/admin/challenges/': typeof AdminChallengesIndexRoute
   '/citizen/challenges/': typeof CitizenChallengesIndexRoute
@@ -101,12 +129,16 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/unauthorized': typeof UnauthorizedRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/clusters': typeof AdminClustersRoute
+  '/admin/projects': typeof AdminProjectsRoute
   '/challenges/$id': typeof ChallengesIdRoute
   '/citizen/nearby': typeof CitizenNearbyRoute
   '/citizen/report': typeof CitizenReportRoute
   '/admin': typeof AdminIndexRoute
   '/challenges': typeof ChallengesIndexRoute
   '/citizen': typeof CitizenIndexRoute
+  '/admin/challenges/$id': typeof AdminChallengesIdRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
   '/admin/challenges': typeof AdminChallengesIndexRoute
   '/citizen/challenges': typeof CitizenChallengesIndexRoute
@@ -116,12 +148,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/unauthorized': typeof UnauthorizedRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/clusters': typeof AdminClustersRoute
+  '/admin/projects': typeof AdminProjectsRoute
   '/challenges/$id': typeof ChallengesIdRoute
   '/citizen/nearby': typeof CitizenNearbyRoute
   '/citizen/report': typeof CitizenReportRoute
   '/admin/': typeof AdminIndexRoute
   '/challenges/': typeof ChallengesIndexRoute
   '/citizen/': typeof CitizenIndexRoute
+  '/admin/challenges/$id': typeof AdminChallengesIdRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
   '/admin/challenges/': typeof AdminChallengesIndexRoute
   '/citizen/challenges/': typeof CitizenChallengesIndexRoute
@@ -132,12 +168,16 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/unauthorized'
+    | '/admin/analytics'
+    | '/admin/clusters'
+    | '/admin/projects'
     | '/challenges/$id'
     | '/citizen/nearby'
     | '/citizen/report'
     | '/admin/'
     | '/challenges/'
     | '/citizen/'
+    | '/admin/challenges/$id'
     | '/citizen/challenges/$id'
     | '/admin/challenges/'
     | '/citizen/challenges/'
@@ -146,12 +186,16 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/unauthorized'
+    | '/admin/analytics'
+    | '/admin/clusters'
+    | '/admin/projects'
     | '/challenges/$id'
     | '/citizen/nearby'
     | '/citizen/report'
     | '/admin'
     | '/challenges'
     | '/citizen'
+    | '/admin/challenges/$id'
     | '/citizen/challenges/$id'
     | '/admin/challenges'
     | '/citizen/challenges'
@@ -160,12 +204,16 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/unauthorized'
+    | '/admin/analytics'
+    | '/admin/clusters'
+    | '/admin/projects'
     | '/challenges/$id'
     | '/citizen/nearby'
     | '/citizen/report'
     | '/admin/'
     | '/challenges/'
     | '/citizen/'
+    | '/admin/challenges/$id'
     | '/citizen/challenges/$id'
     | '/admin/challenges/'
     | '/citizen/challenges/'
@@ -175,12 +223,16 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   UnauthorizedRoute: typeof UnauthorizedRoute
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminClustersRoute: typeof AdminClustersRoute
+  AdminProjectsRoute: typeof AdminProjectsRoute
   ChallengesIdRoute: typeof ChallengesIdRoute
   CitizenNearbyRoute: typeof CitizenNearbyRoute
   CitizenReportRoute: typeof CitizenReportRoute
   AdminIndexRoute: typeof AdminIndexRoute
   ChallengesIndexRoute: typeof ChallengesIndexRoute
   CitizenIndexRoute: typeof CitizenIndexRoute
+  AdminChallengesIdRoute: typeof AdminChallengesIdRoute
   CitizenChallengesIdRoute: typeof CitizenChallengesIdRoute
   AdminChallengesIndexRoute: typeof AdminChallengesIndexRoute
   CitizenChallengesIndexRoute: typeof CitizenChallengesIndexRoute
@@ -214,6 +266,27 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/admin/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/clusters': {
+      id: '/admin/clusters'
+      path: '/admin/clusters'
+      fullPath: '/admin/clusters'
+      preLoaderRoute: typeof AdminClustersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/projects': {
+      id: '/admin/projects'
+      path: '/admin/projects'
+      fullPath: '/admin/projects'
+      preLoaderRoute: typeof AdminProjectsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/challenges/': {
@@ -258,6 +331,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminChallengesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/challenges/$id': {
+      id: '/admin/challenges/$id'
+      path: '/admin/challenges/$id'
+      fullPath: '/admin/challenges/$id'
+      preLoaderRoute: typeof AdminChallengesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/citizen/challenges/': {
       id: '/citizen/challenges/'
       path: '/citizen/challenges'
@@ -279,12 +359,16 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   UnauthorizedRoute: UnauthorizedRoute,
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminClustersRoute: AdminClustersRoute,
+  AdminProjectsRoute: AdminProjectsRoute,
   ChallengesIdRoute: ChallengesIdRoute,
   CitizenNearbyRoute: CitizenNearbyRoute,
   CitizenReportRoute: CitizenReportRoute,
   AdminIndexRoute: AdminIndexRoute,
   ChallengesIndexRoute: ChallengesIndexRoute,
   CitizenIndexRoute: CitizenIndexRoute,
+  AdminChallengesIdRoute: AdminChallengesIdRoute,
   CitizenChallengesIdRoute: CitizenChallengesIdRoute,
   AdminChallengesIndexRoute: AdminChallengesIndexRoute,
   CitizenChallengesIndexRoute: CitizenChallengesIndexRoute,
