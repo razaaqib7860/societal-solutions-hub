@@ -21,12 +21,16 @@ import { Route as ChallengesIdRouteImport } from './routes/challenges.$id'
 import { Route as CitizenIndexRouteImport } from './routes/citizen.index'
 import { Route as CitizenNearbyRouteImport } from './routes/citizen.nearby'
 import { Route as CitizenReportRouteImport } from './routes/citizen.report'
+import { Route as IndustryIndexRouteImport } from './routes/industry.index'
+import { Route as IndustryPartnershipsRouteImport } from './routes/industry.partnerships'
 import { Route as UniversityIndexRouteImport } from './routes/university.index'
 import { Route as UniversityTeamsRouteImport } from './routes/university.teams'
 import { Route as AdminChallengesIndexRouteImport } from './routes/admin.challenges.index'
 import { Route as AdminChallengesIdRouteImport } from './routes/admin.challenges.$id'
 import { Route as CitizenChallengesIndexRouteImport } from './routes/citizen.challenges.index'
 import { Route as CitizenChallengesIdRouteImport } from './routes/citizen.challenges.$id'
+import { Route as IndustryProjectsIndexRouteImport } from './routes/industry.projects.index'
+import { Route as IndustryProjectsIdRouteImport } from './routes/industry.projects.$id'
 import { Route as UniversityChallengesIndexRouteImport } from './routes/university.challenges.index'
 import { Route as UniversityChallengesIdRouteImport } from './routes/university.challenges.$id'
 import { Route as UniversityProjectsIndexRouteImport } from './routes/university.projects.index'
@@ -92,6 +96,16 @@ const CitizenReportRoute = CitizenReportRouteImport.update({
   path: '/citizen/report',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndustryIndexRoute = IndustryIndexRouteImport.update({
+  id: '/industry/',
+  path: '/industry/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustryPartnershipsRoute = IndustryPartnershipsRouteImport.update({
+  id: '/industry/partnerships',
+  path: '/industry/partnerships',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UniversityIndexRoute = UniversityIndexRouteImport.update({
   id: '/university/',
   path: '/university/',
@@ -120,6 +134,16 @@ const CitizenChallengesIndexRoute = CitizenChallengesIndexRouteImport.update({
 const CitizenChallengesIdRoute = CitizenChallengesIdRouteImport.update({
   id: '/citizen/challenges/$id',
   path: '/citizen/challenges/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustryProjectsIndexRoute = IndustryProjectsIndexRouteImport.update({
+  id: '/industry/projects/',
+  path: '/industry/projects/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndustryProjectsIdRoute = IndustryProjectsIdRouteImport.update({
+  id: '/industry/projects/$id',
+  path: '/industry/projects/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UniversityChallengesIndexRoute =
@@ -154,17 +178,21 @@ export interface FileRoutesByFullPath {
   '/challenges/$id': typeof ChallengesIdRoute
   '/citizen/nearby': typeof CitizenNearbyRoute
   '/citizen/report': typeof CitizenReportRoute
+  '/industry/partnerships': typeof IndustryPartnershipsRoute
   '/university/teams': typeof UniversityTeamsRoute
   '/admin/': typeof AdminIndexRoute
   '/challenges/': typeof ChallengesIndexRoute
   '/citizen/': typeof CitizenIndexRoute
+  '/industry/': typeof IndustryIndexRoute
   '/university/': typeof UniversityIndexRoute
   '/admin/challenges/$id': typeof AdminChallengesIdRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
+  '/industry/projects/$id': typeof IndustryProjectsIdRoute
   '/university/challenges/$id': typeof UniversityChallengesIdRoute
   '/university/projects/$id': typeof UniversityProjectsIdRoute
   '/admin/challenges/': typeof AdminChallengesIndexRoute
   '/citizen/challenges/': typeof CitizenChallengesIndexRoute
+  '/industry/projects/': typeof IndustryProjectsIndexRoute
   '/university/challenges/': typeof UniversityChallengesIndexRoute
   '/university/projects/': typeof UniversityProjectsIndexRoute
 }
@@ -178,17 +206,21 @@ export interface FileRoutesByTo {
   '/challenges/$id': typeof ChallengesIdRoute
   '/citizen/nearby': typeof CitizenNearbyRoute
   '/citizen/report': typeof CitizenReportRoute
+  '/industry/partnerships': typeof IndustryPartnershipsRoute
   '/university/teams': typeof UniversityTeamsRoute
   '/admin': typeof AdminIndexRoute
   '/challenges': typeof ChallengesIndexRoute
   '/citizen': typeof CitizenIndexRoute
+  '/industry': typeof IndustryIndexRoute
   '/university': typeof UniversityIndexRoute
   '/admin/challenges/$id': typeof AdminChallengesIdRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
+  '/industry/projects/$id': typeof IndustryProjectsIdRoute
   '/university/challenges/$id': typeof UniversityChallengesIdRoute
   '/university/projects/$id': typeof UniversityProjectsIdRoute
   '/admin/challenges': typeof AdminChallengesIndexRoute
   '/citizen/challenges': typeof CitizenChallengesIndexRoute
+  '/industry/projects': typeof IndustryProjectsIndexRoute
   '/university/challenges': typeof UniversityChallengesIndexRoute
   '/university/projects': typeof UniversityProjectsIndexRoute
 }
@@ -203,17 +235,21 @@ export interface FileRoutesById {
   '/challenges/$id': typeof ChallengesIdRoute
   '/citizen/nearby': typeof CitizenNearbyRoute
   '/citizen/report': typeof CitizenReportRoute
+  '/industry/partnerships': typeof IndustryPartnershipsRoute
   '/university/teams': typeof UniversityTeamsRoute
   '/admin/': typeof AdminIndexRoute
   '/challenges/': typeof ChallengesIndexRoute
   '/citizen/': typeof CitizenIndexRoute
+  '/industry/': typeof IndustryIndexRoute
   '/university/': typeof UniversityIndexRoute
   '/admin/challenges/$id': typeof AdminChallengesIdRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
+  '/industry/projects/$id': typeof IndustryProjectsIdRoute
   '/university/challenges/$id': typeof UniversityChallengesIdRoute
   '/university/projects/$id': typeof UniversityProjectsIdRoute
   '/admin/challenges/': typeof AdminChallengesIndexRoute
   '/citizen/challenges/': typeof CitizenChallengesIndexRoute
+  '/industry/projects/': typeof IndustryProjectsIndexRoute
   '/university/challenges/': typeof UniversityChallengesIndexRoute
   '/university/projects/': typeof UniversityProjectsIndexRoute
 }
@@ -229,17 +265,21 @@ export interface FileRouteTypes {
     | '/challenges/$id'
     | '/citizen/nearby'
     | '/citizen/report'
+    | '/industry/partnerships'
     | '/university/teams'
     | '/admin/'
     | '/challenges/'
     | '/citizen/'
+    | '/industry/'
     | '/university/'
     | '/admin/challenges/$id'
     | '/citizen/challenges/$id'
+    | '/industry/projects/$id'
     | '/university/challenges/$id'
     | '/university/projects/$id'
     | '/admin/challenges/'
     | '/citizen/challenges/'
+    | '/industry/projects/'
     | '/university/challenges/'
     | '/university/projects/'
   fileRoutesByTo: FileRoutesByTo
@@ -253,17 +293,21 @@ export interface FileRouteTypes {
     | '/challenges/$id'
     | '/citizen/nearby'
     | '/citizen/report'
+    | '/industry/partnerships'
     | '/university/teams'
     | '/admin'
     | '/challenges'
     | '/citizen'
+    | '/industry'
     | '/university'
     | '/admin/challenges/$id'
     | '/citizen/challenges/$id'
+    | '/industry/projects/$id'
     | '/university/challenges/$id'
     | '/university/projects/$id'
     | '/admin/challenges'
     | '/citizen/challenges'
+    | '/industry/projects'
     | '/university/challenges'
     | '/university/projects'
   id:
@@ -277,17 +321,21 @@ export interface FileRouteTypes {
     | '/challenges/$id'
     | '/citizen/nearby'
     | '/citizen/report'
+    | '/industry/partnerships'
     | '/university/teams'
     | '/admin/'
     | '/challenges/'
     | '/citizen/'
+    | '/industry/'
     | '/university/'
     | '/admin/challenges/$id'
     | '/citizen/challenges/$id'
+    | '/industry/projects/$id'
     | '/university/challenges/$id'
     | '/university/projects/$id'
     | '/admin/challenges/'
     | '/citizen/challenges/'
+    | '/industry/projects/'
     | '/university/challenges/'
     | '/university/projects/'
   fileRoutesById: FileRoutesById
@@ -302,17 +350,21 @@ export interface RootRouteChildren {
   ChallengesIdRoute: typeof ChallengesIdRoute
   CitizenNearbyRoute: typeof CitizenNearbyRoute
   CitizenReportRoute: typeof CitizenReportRoute
+  IndustryPartnershipsRoute: typeof IndustryPartnershipsRoute
   UniversityTeamsRoute: typeof UniversityTeamsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   ChallengesIndexRoute: typeof ChallengesIndexRoute
   CitizenIndexRoute: typeof CitizenIndexRoute
+  IndustryIndexRoute: typeof IndustryIndexRoute
   UniversityIndexRoute: typeof UniversityIndexRoute
   AdminChallengesIdRoute: typeof AdminChallengesIdRoute
   CitizenChallengesIdRoute: typeof CitizenChallengesIdRoute
+  IndustryProjectsIdRoute: typeof IndustryProjectsIdRoute
   UniversityChallengesIdRoute: typeof UniversityChallengesIdRoute
   UniversityProjectsIdRoute: typeof UniversityProjectsIdRoute
   AdminChallengesIndexRoute: typeof AdminChallengesIndexRoute
   CitizenChallengesIndexRoute: typeof CitizenChallengesIndexRoute
+  IndustryProjectsIndexRoute: typeof IndustryProjectsIndexRoute
   UniversityChallengesIndexRoute: typeof UniversityChallengesIndexRoute
   UniversityProjectsIndexRoute: typeof UniversityProjectsIndexRoute
 }
@@ -403,6 +455,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CitizenReportRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/industry/': {
+      id: '/industry/'
+      path: '/industry'
+      fullPath: '/industry/'
+      preLoaderRoute: typeof IndustryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industry/partnerships': {
+      id: '/industry/partnerships'
+      path: '/industry/partnerships'
+      fullPath: '/industry/partnerships'
+      preLoaderRoute: typeof IndustryPartnershipsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/university/': {
       id: '/university/'
       path: '/university'
@@ -443,6 +509,20 @@ declare module '@tanstack/react-router' {
       path: '/citizen/challenges/$id'
       fullPath: '/citizen/challenges/$id'
       preLoaderRoute: typeof CitizenChallengesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industry/projects/': {
+      id: '/industry/projects/'
+      path: '/industry/projects'
+      fullPath: '/industry/projects/'
+      preLoaderRoute: typeof IndustryProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/industry/projects/$id': {
+      id: '/industry/projects/$id'
+      path: '/industry/projects/$id'
+      fullPath: '/industry/projects/$id'
+      preLoaderRoute: typeof IndustryProjectsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/university/challenges/': {
@@ -486,17 +566,21 @@ const rootRouteChildren: RootRouteChildren = {
   ChallengesIdRoute: ChallengesIdRoute,
   CitizenNearbyRoute: CitizenNearbyRoute,
   CitizenReportRoute: CitizenReportRoute,
+  IndustryPartnershipsRoute: IndustryPartnershipsRoute,
   UniversityTeamsRoute: UniversityTeamsRoute,
   AdminIndexRoute: AdminIndexRoute,
   ChallengesIndexRoute: ChallengesIndexRoute,
   CitizenIndexRoute: CitizenIndexRoute,
+  IndustryIndexRoute: IndustryIndexRoute,
   UniversityIndexRoute: UniversityIndexRoute,
   AdminChallengesIdRoute: AdminChallengesIdRoute,
   CitizenChallengesIdRoute: CitizenChallengesIdRoute,
+  IndustryProjectsIdRoute: IndustryProjectsIdRoute,
   UniversityChallengesIdRoute: UniversityChallengesIdRoute,
   UniversityProjectsIdRoute: UniversityProjectsIdRoute,
   AdminChallengesIndexRoute: AdminChallengesIndexRoute,
   CitizenChallengesIndexRoute: CitizenChallengesIndexRoute,
+  IndustryProjectsIndexRoute: IndustryProjectsIndexRoute,
   UniversityChallengesIndexRoute: UniversityChallengesIndexRoute,
   UniversityProjectsIndexRoute: UniversityProjectsIndexRoute,
 }
