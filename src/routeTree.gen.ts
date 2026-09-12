@@ -30,6 +30,7 @@ import { Route as CitizenChallengesIdRouteImport } from './routes/citizen.challe
 import { Route as UniversityChallengesIndexRouteImport } from './routes/university.challenges.index'
 import { Route as UniversityChallengesIdRouteImport } from './routes/university.challenges.$id'
 import { Route as UniversityProjectsIndexRouteImport } from './routes/university.projects.index'
+import { Route as UniversityProjectsIdRouteImport } from './routes/university.projects.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -137,6 +138,11 @@ const UniversityProjectsIndexRoute = UniversityProjectsIndexRouteImport.update({
   path: '/university/projects/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UniversityProjectsIdRoute = UniversityProjectsIdRouteImport.update({
+  id: '/university/projects/$id',
+  path: '/university/projects/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/admin/challenges/$id': typeof AdminChallengesIdRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
   '/university/challenges/$id': typeof UniversityChallengesIdRoute
+  '/university/projects/$id': typeof UniversityProjectsIdRoute
   '/admin/challenges/': typeof AdminChallengesIndexRoute
   '/citizen/challenges/': typeof CitizenChallengesIndexRoute
   '/university/challenges/': typeof UniversityChallengesIndexRoute
@@ -179,6 +186,7 @@ export interface FileRoutesByTo {
   '/admin/challenges/$id': typeof AdminChallengesIdRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
   '/university/challenges/$id': typeof UniversityChallengesIdRoute
+  '/university/projects/$id': typeof UniversityProjectsIdRoute
   '/admin/challenges': typeof AdminChallengesIndexRoute
   '/citizen/challenges': typeof CitizenChallengesIndexRoute
   '/university/challenges': typeof UniversityChallengesIndexRoute
@@ -203,6 +211,7 @@ export interface FileRoutesById {
   '/admin/challenges/$id': typeof AdminChallengesIdRoute
   '/citizen/challenges/$id': typeof CitizenChallengesIdRoute
   '/university/challenges/$id': typeof UniversityChallengesIdRoute
+  '/university/projects/$id': typeof UniversityProjectsIdRoute
   '/admin/challenges/': typeof AdminChallengesIndexRoute
   '/citizen/challenges/': typeof CitizenChallengesIndexRoute
   '/university/challenges/': typeof UniversityChallengesIndexRoute
@@ -228,6 +237,7 @@ export interface FileRouteTypes {
     | '/admin/challenges/$id'
     | '/citizen/challenges/$id'
     | '/university/challenges/$id'
+    | '/university/projects/$id'
     | '/admin/challenges/'
     | '/citizen/challenges/'
     | '/university/challenges/'
@@ -251,6 +261,7 @@ export interface FileRouteTypes {
     | '/admin/challenges/$id'
     | '/citizen/challenges/$id'
     | '/university/challenges/$id'
+    | '/university/projects/$id'
     | '/admin/challenges'
     | '/citizen/challenges'
     | '/university/challenges'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/admin/challenges/$id'
     | '/citizen/challenges/$id'
     | '/university/challenges/$id'
+    | '/university/projects/$id'
     | '/admin/challenges/'
     | '/citizen/challenges/'
     | '/university/challenges/'
@@ -298,6 +310,7 @@ export interface RootRouteChildren {
   AdminChallengesIdRoute: typeof AdminChallengesIdRoute
   CitizenChallengesIdRoute: typeof CitizenChallengesIdRoute
   UniversityChallengesIdRoute: typeof UniversityChallengesIdRoute
+  UniversityProjectsIdRoute: typeof UniversityProjectsIdRoute
   AdminChallengesIndexRoute: typeof AdminChallengesIndexRoute
   CitizenChallengesIndexRoute: typeof CitizenChallengesIndexRoute
   UniversityChallengesIndexRoute: typeof UniversityChallengesIndexRoute
@@ -453,6 +466,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UniversityProjectsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/university/projects/$id': {
+      id: '/university/projects/$id'
+      path: '/university/projects/$id'
+      fullPath: '/university/projects/$id'
+      preLoaderRoute: typeof UniversityProjectsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -474,6 +494,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminChallengesIdRoute: AdminChallengesIdRoute,
   CitizenChallengesIdRoute: CitizenChallengesIdRoute,
   UniversityChallengesIdRoute: UniversityChallengesIdRoute,
+  UniversityProjectsIdRoute: UniversityProjectsIdRoute,
   AdminChallengesIndexRoute: AdminChallengesIndexRoute,
   CitizenChallengesIndexRoute: CitizenChallengesIndexRoute,
   UniversityChallengesIndexRoute: UniversityChallengesIndexRoute,
