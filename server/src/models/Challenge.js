@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { CHALLENGE_STATUS, SEVERITY } from '../utils/constants.js';
+import { CHALLENGE_STATUS, COMPLAINT_CATEGORIES, COMPLAINT_PRIORITIES, SEVERITY } from '../utils/constants.js';
 
 const timelineEntrySchema = new mongoose.Schema(
   {
@@ -25,7 +25,7 @@ const challengeSchema = new mongoose.Schema(
     submittedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     title: { type: String, required: true, trim: true },
     description: { type: String, required: true },
-    category: { type: String },
+    category: { type: String, enum: COMPLAINT_CATEGORIES, default: 'Other' },
     subcategory: { type: String },
     location: {
       district: { type: String },
@@ -39,6 +39,7 @@ const challengeSchema = new mongoose.Schema(
     frequency: { type: String, enum: ['One-time', 'Occasional', 'Recurring', 'Continuous'], default: 'Recurring' },
     urgency: { type: String, enum: ['Low', 'Medium', 'High', 'Critical'], default: 'Medium' },
     severity: { type: String, enum: SEVERITY, default: 'Medium' },
+    priority: { type: String, enum: COMPLAINT_PRIORITIES, default: 'MEDIUM', index: true },
     priorityScore: { type: Number, default: 0 },
     innovationScore: { type: Number, default: 0 },
     status: { type: String, enum: Object.values(CHALLENGE_STATUS), default: CHALLENGE_STATUS.SUBMITTED, index: true },
@@ -52,9 +53,20 @@ const challengeSchema = new mongoose.Schema(
       category: String,
       subcategory: String,
       severity: String,
+      priority: { type: String, enum: COMPLAINT_PRIORITIES },
       priorityScore: Number,
       innovationScore: Number,
       confidence: Number,
+      reason: String,
+      aiClassified: { type: Boolean, default: false },
+      requiresManualReview: { type: Boolean, default: false },
+      original: {
+        category: String,
+        subcategory: String,
+        priority: { type: String, enum: COMPLAINT_PRIORITIES },
+        confidence: Number,
+        reason: String,
+      },
       generatedAt: Date,
       overriddenBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       aiAssisted: { type: Boolean, default: true },

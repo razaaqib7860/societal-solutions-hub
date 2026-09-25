@@ -4,7 +4,7 @@ import type { Challenge } from "@/lib/types";
 import { useData } from "@/context/DataContext";
 import { JharkhandMap } from "./JharkhandMap";
 import { ChallengeTimeline } from "./ChallengeTimeline";
-import { AIBadge, DataRow, Panel, PanelHeader, ScoreBar, SeverityBadge, StatusBadge, fmtDate } from "./kit";
+import { AIBadge, DataRow, Panel, PanelHeader, PriorityBadge, ScoreBar, SeverityBadge, StatusBadge, fmtDate } from "./kit";
 
 const EV_ICON = { photo: ImageIcon, video: Video, document: FileText };
 
@@ -33,6 +33,7 @@ export function ChallengeDetail({
               <span className="font-mono text-[11.5px] text-muted-foreground">{challenge.code}</span>
               <StatusBadge status={challenge.status} />
               <SeverityBadge severity={challenge.severity} />
+              <PriorityBadge priority={challenge.priority} />
               {challenge.isMaster && <span className="text-[11px] font-semibold tracking-wide text-accent uppercase">Master challenge</span>}
             </div>
             <h2 className="mt-2 font-serif text-[22px] leading-snug font-semibold text-ink">{challenge.title}</h2>
@@ -101,14 +102,16 @@ export function ChallengeDetail({
                   <DataRow label="Suggested category" value={challenge.ai.category} />
                   <DataRow label="Suggested subcategory" value={challenge.ai.subcategory} />
                   <DataRow label="Suggested severity" value={challenge.ai.severity} />
+                  <DataRow label="Suggested priority" value={<PriorityBadge priority={challenge.ai.priority} />} />
                   <DataRow label="Model confidence" value={`${Math.round(challenge.ai.confidence * 100)}%`} />
                   <DataRow label="Similar reports within 5 km" value={challenge.ai.similarCount} />
                   {challenge.ai.overridden && <DataRow label="Officer override" value="Applied" />}
+                  <DataRow label="Review state" value={challenge.ai.requiresManualReview ? "Manual review required" : "AI classified"} />
                 </dl>
                 <div className="space-y-4">
                   <ScoreBar label="Priority score" value={challenge.ai.priorityScore} />
                   <ScoreBar label="Innovation potential" value={challenge.ai.innovationScore} tone="accent" />
-                  <p className="text-[12.5px] leading-relaxed text-muted-foreground">{challenge.ai.summary}</p>
+                  <p className="text-[12.5px] leading-relaxed text-muted-foreground">{challenge.ai.reason}</p>
                 </div>
               </div>
             </Panel>
