@@ -12,6 +12,7 @@ export type ChallengeStatus =
   | "MERGED";
 
 export type Severity = "Low" | "Medium" | "High" | "Critical";
+export type ComplaintPriority = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 
 export type ProjectStatus =
   | "PROPOSAL"
@@ -54,11 +55,15 @@ export interface AIAnalysis {
   category: string;
   subcategory: string;
   severity: Severity;
+  priority: ComplaintPriority;
   priorityScore: number;
   innovationScore: number;
   confidence: number;
   similarCount: number;
   summary: string;
+  reason: string;
+  aiClassified: boolean;
+  requiresManualReview: boolean;
   overridden?: boolean;
 }
 
@@ -90,6 +95,7 @@ export interface Challenge {
   frequency: string;
   urgency: string;
   severity: Severity;
+  priority: ComplaintPriority;
   priorityScore: number;
   innovationScore: number;
   status: ChallengeStatus;

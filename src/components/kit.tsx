@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-import type { ChallengeStatus, MilestoneStatus, ProjectStatus, Severity } from "@/lib/types";
+import type { ChallengeStatus, ComplaintPriority, MilestoneStatus, ProjectStatus, Severity } from "@/lib/types";
 import { Sparkles } from "lucide-react";
 
 export function Panel({ className, children }: { className?: string; children: ReactNode }) {
@@ -145,6 +145,11 @@ export function StatusBadge({ status }: { status: ChallengeStatus }) {
 const sevTone: Record<Severity, keyof typeof badgeTone> = { Low: "neutral", Medium: "blue", High: "amber", Critical: "red" };
 export function SeverityBadge({ severity }: { severity: Severity }) {
   return <Badge tone={sevTone[severity]}>{severity}</Badge>;
+}
+
+const priorityTone: Record<ComplaintPriority, keyof typeof badgeTone> = { LOW: "neutral", MEDIUM: "blue", HIGH: "amber", CRITICAL: "red" };
+export function PriorityBadge({ priority }: { priority: ComplaintPriority }) {
+  return <Badge tone={priorityTone[priority]}>{priority}</Badge>;
 }
 
 const msTone: Record<MilestoneStatus, keyof typeof badgeTone> = {

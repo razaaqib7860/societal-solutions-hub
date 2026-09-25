@@ -22,6 +22,7 @@ import type {
   Proposal,
   Role,
   Severity,
+  ComplaintPriority,
 } from "@/lib/types";
 
 /**
@@ -44,7 +45,7 @@ interface DataValue {
   submitChallenge: (input: SubmitInput) => { challenge: Challenge; analysis: AIAnalysis };
   setStatus: (id: string, status: ChallengeStatus, by: string, note?: string) => void;
   mergeCluster: (id: string, by: string) => void;
-  overrideClassification: (id: string, patch: { category: string; subcategory: string; severity: Severity }, by: string) => void;
+  overrideClassification: (id: string, patch: { category: string; subcategory: string; priority: ComplaintPriority }, by: string) => void;
   assignUniversity: (id: string, universityId: string, by: string) => void;
   acceptChallenge: (challengeId: string, universityId: string, by: string) => Project;
   setTeam: (projectId: string, team: { facultyMentorId: string; studentIds: string[]; requiredSkills: string[] }) => void;
@@ -137,6 +138,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         frequency: input.frequency,
         urgency: input.urgency,
         severity: "Medium",
+        priority: "MEDIUM",
         priorityScore: 0,
         innovationScore: 0,
         status: "SUBMITTED",
@@ -154,6 +156,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
         category: analysis.category,
         subcategory: input.subcategory || analysis.subcategory,
         severity: analysis.severity,
+        priority: analysis.priority,
         priorityScore: analysis.priorityScore,
         innovationScore: analysis.innovationScore,
         similarChallenges: similar.slice(0, 30).map((s) => s.id),
@@ -165,7 +168,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       notify({
         role: "ADMIN",
         title: similar.length > 3 ? `${similar.length} similar challenges detected` : "New challenge submitted",
-        body: `${scored.title} — ${scored.location.district}. AI-assisted priority ${scored.priorityScore}/100.`,
+        body: `${scored.title} — ${scored.location.district}. AI-assisted priority ${scored.priority}.`,
         link: `/admin/challenges/${id}`,
       });
       return { challenge: scored, analysis };
