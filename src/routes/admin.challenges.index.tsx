@@ -6,7 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useData } from "@/context/DataContext";
 import { DOMAINS } from "@/lib/aiService";
 import { DISTRICTS } from "@/lib/seed";
-import { Panel, SeverityBadge, StatusBadge, fmtDate } from "@/components/kit";
+import { Panel, PriorityBadge, StatusBadge, fmtDate } from "@/components/kit";
 import { STATUS_LABEL } from "@/components/kit";
 import type { ChallengeStatus } from "@/lib/types";
 
@@ -32,6 +32,10 @@ function AdminChallenges() {
   const [district, setDistrict] = useState("");
   const [domain, setDomain] = useState("");
   const [status, setStatusFilter] = useState("");
+  const [subcategory, setSubcategory] = useState("");
+  const [priority, setPriority] = useState("");
+  const [classification, setClassification] = useState("");
+  const [date, setDate] = useState("");
   const [q, setQ] = useState("");
 
   const rows = useMemo(
@@ -41,9 +45,13 @@ function AdminChallenges() {
         .filter((c) => (district ? c.location.district === district : true))
         .filter((c) => (domain ? c.category === domain : true))
         .filter((c) => (status ? c.status === status : true))
+        .filter((c) => (subcategory ? c.subcategory === subcategory : true))
+        .filter((c) => (priority ? c.priority === priority : true))
+        .filter((c) => (classification === "manual" ? c.ai?.requiresManualReview : classification === "classified" ? c.ai?.aiClassified && !c.ai.requiresManualReview : true))
+        .filter((c) => (date ? c.createdAt.slice(0, 10) === date : true))
         .filter((c) => (q ? c.title.toLowerCase().includes(q.toLowerCase()) : true))
         .sort((a, b) => b.priorityScore - a.priorityScore),
-    [challenges, district, domain, status, q],
+    [challenges, district, domain, status, subcategory, priority, classification, date, q],
   );
 
   const officer = user?.name ?? "Officer";
@@ -77,6 +85,20 @@ function AdminChallenges() {
               </option>
             ))}
           </select>
+          <select className="field" value={subcategory} onChange={(e) => setSubcategory(e.target.value)} aria-label="Subcategory">
+            <option value="">All subcategories</option>
+            {(domain ? DOMAINS[domain]?.subcategories ?? [] : [...new Set(Object.values(DOMAINS).flatMap((d) => d.subcategories))]).map((s) => <option key={s}>{s}</option>)}
+          </select>
+          <select className="field" value={priority} onChange={(e) => setPriority(e.target.value)} aria-label="Priority">
+            <option value="">All priorities</option>
+            {(["LOW", "MEDIUM", "HIGH", "CRITICAL"] as const).map((p) => <option key={p}>{p}</option>)}
+          </select>
+          <select className="field" value={classification} onChange={(e) => setClassification(e.target.value)} aria-label="Classification state">
+            <option value="">All classification states</option>
+            <option value="classified">AI classified</option>
+            <option value="manual">Manual review required</option>
+          </select>
+          <input className="field" type="date" value={date} onChange={(e) => setDate(e.target.value)} aria-label="Created date" />
         </div>
 
         <Panel className="overflow-hidden">
@@ -86,9 +108,9 @@ function AdminChallenges() {
                 <tr>
                   <th>Challenge</th>
                   <th>Location</th>
-                  <th>Domain</th>
-                  <th>Severity</th>
-                  <th className="text-right">AI priority</th>
+                  <th>Classification</th>
+                  <th>Priority</th>
+                  <th className="text-right">Confidence</th>
                   <th className="text-right">Reports</th>
                   <th>Status</th>
                   <th className="text-right">Actions</th>
@@ -108,11 +130,12 @@ function AdminChallenges() {
                     <td className="text-muted-foreground">
                       {c.location.block}, {c.location.district}
                     </td>
-                    <td className="text-muted-foreground">{c.category}</td>
                     <td>
-                      <SeverityBadge severity={c.severity} />
+                      <div className="text-ink">{c.category}</div>
+                      <div className="text-[11.5px] text-muted-foreground">{c.subcategory}{c.ai?.requiresManualReview ? " · Manual review" : ""}</div>
                     </td>
-                    <td className="text-right font-mono font-semibold tabular-nums">{c.priorityScore}</td>
+                    <td><PriorityBadge priority={c.priority} /></td>
+                    <td className="text-right font-mono tabular-nums">{c.ai ? `${Math.round(c.ai.confidence * 100)}%` : "—"}</td>
                     <td className="text-right font-mono tabular-nums">{c.reportCount}</td>
                     <td>
                       <StatusBadge status={c.status} />

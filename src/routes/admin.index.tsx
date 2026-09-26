@@ -25,6 +25,8 @@ function AdminDashboard() {
   const validated = open.filter((c) => ["VALIDATED", "MATCHED", "PROJECT_CREATED", "IN_PROGRESS", "RESOLVED"].includes(c.status));
   const deployed = projects.filter((p) => ["DEPLOYMENT", "IMPACT_MEASUREMENT"].includes(p.status));
   const clusters = open.filter((c) => c.reportCount > 3);
+  const critical = open.filter((c) => c.priority === "CRITICAL").length;
+  const high = open.filter((c) => c.priority === "HIGH").length;
 
   const byDomain = Object.entries(
     open.reduce<Record<string, number>>((acc, c) => ({ ...acc, [c.category]: (acc[c.category] ?? 0) + 1 }), {}),
@@ -51,10 +53,12 @@ function AdminDashboard() {
       subtitle="Department of Higher & Technical Education — challenge intelligence, validation and impact oversight."
     >
       <div className="space-y-6">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-9">
           <Metric label="Total challenges" value={open.length} />
           <Metric label="Pending validation" value={pending.length} tone="accent" />
           <Metric label="Validated" value={validated.length} tone="primary" />
+          <Metric label="Critical" value={critical} tone="accent" />
+          <Metric label="High priority" value={high} />
           <Metric label="Active projects" value={projects.filter((p) => p.status !== "IMPACT_MEASUREMENT").length} />
           <Metric label="Solutions deployed" value={deployed.length} tone="primary" />
           <Metric label="Universities" value={universities.length} />
