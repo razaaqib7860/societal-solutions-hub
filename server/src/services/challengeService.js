@@ -1,5 +1,6 @@
 import { Challenge } from '../models/index.js';
-import { classifyChallenge, calculatePriority, findDuplicates } from './aiService.js';
+import { calculatePriority, findDuplicates } from './aiService.js';
+import { classifyComplaint } from './aiClassifier.js';
 import { recommendUniversitiesForChallenge } from './matchingService.js';
 
 /**
@@ -8,22 +9,35 @@ import { recommendUniversitiesForChallenge } from './matchingService.js';
  * Persists the results onto the challenge document.
  */
 export async function runAiPipeline(challenge) {
-  const [classification, priority] = await Promise.all([
-    classifyChallenge(challenge),
-    calculatePriority(challenge),
+  const [classification, scoring] = await Promise.all([
+    classifyComplaint(challenge),
+    calculatePriority(challenge).catch(() => ({ priorityScore: 55, innovationScore: 50 })),
   ]);
 
   challenge.category = challenge.category || classification.category;
   challenge.subcategory = challenge.subcategory || classification.subcategory;
-  challenge.priorityScore = priority.priorityScore;
-  challenge.innovationScore = priority.innovationScore;
+  challenge.priority = classification.priority;
+  challenge.severity = ({ LOW: 'Low', MEDIUM: 'Medium', HIGH: 'High', CRITICAL: 'Critical' })[classification.priority];
+  challenge.priorityScore = scoring.priorityScore;
+  challenge.innovationScore = scoring.innovationScore;
   challenge.aiAnalysis = {
     category: classification.category,
     subcategory: classification.subcategory,
     severity: challenge.severity,
-    priorityScore: priority.priorityScore,
-    innovationScore: priority.innovationScore,
+    priority: classification.priority,
+    priorityScore: scoring.priorityScore,
+    innovationScore: scoring.innovationScore,
     confidence: classification.confidence,
+    reason: classification.reason,
+    aiClassified: classification.aiClassified,
+    requiresManualReview: classification.requiresManualReview,
+    original: {
+      category: classification.category,
+      subcategory: classification.subcategory,
+      priority: classification.priority,
+      confidence: classification.confidence,
+      reason: classification.reason,
+    },
     generatedAt: new Date(),
     aiAssisted: true,
   };
