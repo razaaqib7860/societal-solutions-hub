@@ -7,8 +7,8 @@ import { ChallengeDetail } from "@/components/ChallengeDetail";
 import { useAuth } from "@/context/AuthContext";
 import { useData } from "@/context/DataContext";
 import { DOMAINS } from "@/lib/aiService";
-import { AIBadge, EmptyState, Field, Panel, PanelHeader, ScoreBar, SeverityBadge, fmtDate } from "@/components/kit";
-import type { Severity } from "@/lib/types";
+import { AIBadge, DataRow, EmptyState, Field, Panel, PanelHeader, PriorityBadge, ScoreBar, SeverityBadge, fmtDate } from "@/components/kit";
+import type { ComplaintPriority } from "@/lib/types";
 
 export const Route = createFileRoute("/admin/challenges/$id")({
   head: () => ({
@@ -33,7 +33,7 @@ function AdminChallengeReview() {
 
   const [cat, setCat] = useState(challenge?.category ?? "");
   const [sub, setSub] = useState(challenge?.subcategory ?? "");
-  const [sev, setSev] = useState<Severity>(challenge?.severity ?? "Medium");
+  const [priority, setPriority] = useState<ComplaintPriority>(challenge?.priority ?? "MEDIUM");
 
   if (!challenge) {
     return (
@@ -150,9 +150,9 @@ function AdminChallengeReview() {
                   ))}
                 </select>
               </Field>
-              <Field label="Severity">
-                <select className="field" value={sev} onChange={(e) => setSev(e.target.value as Severity)}>
-                  {(["Low", "Medium", "High", "Critical"] as Severity[]).map((s) => (
+              <Field label="Priority">
+                <select className="field" value={priority} onChange={(e) => setPriority(e.target.value as ComplaintPriority)}>
+                  {(["LOW", "MEDIUM", "HIGH", "CRITICAL"] as ComplaintPriority[]).map((s) => (
                     <option key={s}>{s}</option>
                   ))}
                 </select>
@@ -161,7 +161,7 @@ function AdminChallengeReview() {
                 <button
                   className="btn btn-outline btn-sm"
                   onClick={() => {
-                    overrideClassification(challenge.id, { category: cat, subcategory: sub, severity: sev }, officer);
+                    overrideClassification(challenge.id, { category: cat, subcategory: sub, priority }, officer);
                     toast.success("Classification updated — recorded as an officer override.");
                   }}
                 >
@@ -169,6 +169,17 @@ function AdminChallengeReview() {
                 </button>
               </div>
             </div>
+            {challenge.ai && (
+              <div className="border-t border-border px-5 py-4">
+                <div className="eyebrow mb-2">Original AI suggestion — preserved for audit</div>
+                <dl>
+                  <DataRow label="Classification" value={`${challenge.ai.category} › ${challenge.ai.subcategory}`} />
+                  <DataRow label="Priority" value={<PriorityBadge priority={challenge.ai.priority} />} />
+                  <DataRow label="Confidence" value={`${Math.round(challenge.ai.confidence * 100)}%`} />
+                  <DataRow label="Reason" value={challenge.ai.reason} />
+                </dl>
+              </div>
+            )}
           </Panel>
         </div>
 

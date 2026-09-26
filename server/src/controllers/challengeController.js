@@ -9,7 +9,7 @@ import { User } from '../models/index.js';
 
 /** POST /api/v1/challenges */
 export const createChallenge = asyncHandler(async (req, res) => {
-  const payload = { ...req.body, submittedBy: req.user._id };
+  const payload = { ...req.body, title: req.body.title.trim(), description: req.body.description.trim(), submittedBy: req.user._id };
   const challenge = new Challenge(payload);
   challenge.timeline.push({ status: CHALLENGE_STATUS.SUBMITTED, at: new Date(), by: req.user._id, note: 'Challenge submitted' });
 
@@ -158,15 +158,18 @@ export const assignChallenge = asyncHandler(async (req, res) => {
 
 /** PATCH /api/v1/challenges/:id/override (ADMIN) - overrides AI classification */
 export const overrideClassification = asyncHandler(async (req, res) => {
-  const { category, subcategory, severity, priorityScore } = req.body;
+  const { category, subcategory, priority } = req.body;
   const challenge = await Challenge.findById(req.params.id);
   if (!challenge) return fail(res, 'Challenge not found', 404);
 
   if (category) challenge.category = category;
   if (subcategory) challenge.subcategory = subcategory;
-  if (severity) challenge.severity = severity;
-  if (priorityScore != null) challenge.priorityScore = priorityScore;
+  if (priority) {
+    challenge.priority = priority;
+    challenge.severity = ({ LOW: 'Low', MEDIUM: 'Medium', HIGH: 'High', CRITICAL: 'Critical' })[priority];
+  }
   challenge.aiAnalysis.overriddenBy = req.user._id;
+  challenge.aiAnalysis.requiresManualReview = false;
   await challenge.save();
 
   ok(res, challenge, 'AI classification overridden');
