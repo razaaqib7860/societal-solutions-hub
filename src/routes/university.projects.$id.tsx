@@ -44,7 +44,10 @@ function ProjectWorkspace() {
   const tabs = [{ id: "overview", label: "Overview" }, { id: "team", label: "Team" }, { id: "proposal", label: "Proposal" }, { id: "milestones", label: "Milestones" }] as const;
 
   const saveTeam = () => {
-    if (!mentor || members.length === 0) return toast.error("Choose a faculty mentor and at least one student.");
+    if (!mentor || members.length === 0) {
+      toast.error("Choose a faculty mentor and at least one student.");
+      return;
+    }
     setTeam(project.id, { facultyMentorId: mentor, studentIds: members, requiredSkills: skills.split(",").map((s) => s.trim()).filter(Boolean) });
     toast.success("Multidisciplinary team saved.");
   };

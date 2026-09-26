@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useData } from "@/context/DataContext";
 import { DOMAINS } from "@/lib/aiService";
 import { DISTRICTS } from "@/lib/seed";
-import { AIBadge, DataRow, Field, Panel, PanelHeader, ScoreBar } from "@/components/kit";
+import { AIBadge, DataRow, Field, Panel, PanelHeader, PriorityBadge, ScoreBar } from "@/components/kit";
 import type { AIAnalysis } from "@/lib/types";
 
 export const Route = createFileRoute("/citizen/report")({
@@ -129,14 +129,15 @@ function ReportProblem() {
                   <dl>
                     <DataRow label="Category" value={result.analysis.category} />
                     <DataRow label="Subcategory" value={result.analysis.subcategory} />
-                    <DataRow label="Severity" value={result.analysis.severity} />
+                    <DataRow label="Priority" value={<PriorityBadge priority={result.analysis.priority} />} />
+                    <DataRow label="Status" value={result.analysis.requiresManualReview ? "Manual review required" : "Pending review"} />
                     <DataRow label="Similar challenges" value={result.analysis.similarCount} />
                     <DataRow label="Model confidence" value={`${Math.round(result.analysis.confidence * 100)}%`} />
                   </dl>
                   <div className="space-y-4">
-                    <ScoreBar label="Priority" value={result.analysis.priorityScore} />
+                    <ScoreBar label="Priority score" value={result.analysis.priorityScore} />
                     <ScoreBar label="Innovation potential" value={result.analysis.innovationScore} tone="accent" />
-                    <p className="text-[12.5px] leading-relaxed text-muted-foreground">{result.analysis.summary}</p>
+                    <p className="text-[12.5px] leading-relaxed text-muted-foreground">{result.analysis.reason}</p>
                   </div>
                 </div>
               )
